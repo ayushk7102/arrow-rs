@@ -1,0 +1,23 @@
+[package]
+name = "ray-parquet-reader"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+arrow-array = { version = "58.1.0", path = "../arrow-array" }
+arrow-pyarrow = { version = "58.1.0", path = "../arrow-pyarrow" }
+arrow-schema = { version = "58.1.0", path = "../arrow-schema" }
+parquet = { version = "58.1.0", path = "../parquet", features = ["arrow", "async"] }
+pyo3 = { version = "0.28.0", features = ["extension-module", "abi3-py310"] }
+tokio = { version = "1", features = ["rt-multi-thread", "fs", "macros"] }
+futures = "0.3"
+
+[profile.release]
+codegen-units = 1
+lto = "thin"
+opt-level = "z"
+strip = true
